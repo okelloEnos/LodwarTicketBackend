@@ -6,6 +6,7 @@ import com.okellosoftwarez.lodwarticketbackend.ticket.entity.TicketPriority;
 import com.okellosoftwarez.lodwarticketbackend.ticket.entity.TicketStatus;
 import com.okellosoftwarez.lodwarticketbackend.ticket.exception.TicketBadRequestException;
 import com.okellosoftwarez.lodwarticketbackend.ticket.exception.TicketNotFoundException;
+import com.okellosoftwarez.lodwarticketbackend.ticket.repository.StatusCount;
 import com.okellosoftwarez.lodwarticketbackend.ticket.repository.TicketRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.BadRequestException;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -85,5 +88,18 @@ public class TicketService {
         }
 
         return repository.save(ticket);
+    }
+
+    // fetch counts of tickets by status
+    public Map<String, Long> fetchStatusCount() {
+
+        Map<String, Long> counts = new LinkedHashMap<>();
+        for (TicketStatus status : TicketStatus.values()) {
+            counts.put(status.name(), 0L);
+        }
+        for (StatusCount row : repository.countByStatus()) {
+            counts.put(row.getStatus().name(), row.getCount());
+        }
+        return counts;
     }
 }

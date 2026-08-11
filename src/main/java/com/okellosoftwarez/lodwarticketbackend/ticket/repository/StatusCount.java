@@ -1,4 +1,10 @@
 package com.okellosoftwarez.lodwarticketbackend.ticket.repository;
 
-public interface StatusCountProjection {
+import com.okellosoftwarez.lodwarticketbackend.ticket.entity.TicketStatus;
+
+public interface StatusCount {
+
+    TicketStatus getStatus();
+
+    Long getCount();
 }

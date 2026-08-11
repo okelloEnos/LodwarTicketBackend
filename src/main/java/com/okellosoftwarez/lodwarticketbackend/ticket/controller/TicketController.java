@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -42,5 +43,10 @@ public class TicketController {
     public TicketResponse update(@PathVariable UUID id, @RequestBody UpdateTicketRequest request) {
         Ticket ticket = service.updateTicket(id, request);
         return TicketResponse.from(ticket);
+    }
+
+    @GetMapping("/stats")
+    public Map<String, Long> statusCount() {
+        return service.fetchStatusCount();
     }
 }
