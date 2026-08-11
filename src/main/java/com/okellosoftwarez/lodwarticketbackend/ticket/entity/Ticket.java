@@ -1,8 +1,7 @@
 package com.okellosoftwarez.lodwarticketbackend.ticket.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
@@ -12,6 +11,9 @@ import java.util.UUID;
 @Table(name="tickets")
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Ticket {
 
     @Id
@@ -24,10 +26,10 @@ public class Ticket {
     private String description;
 
     @Enumerated(EnumType.STRING)
-    private TicketStatus status;
+    private TicketStatus status = TicketStatus.OPEN;
 
     @Enumerated(EnumType.STRING)
-    private TicketPriority priority;
+    private TicketPriority priority = TicketPriority.MEDIUM;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
