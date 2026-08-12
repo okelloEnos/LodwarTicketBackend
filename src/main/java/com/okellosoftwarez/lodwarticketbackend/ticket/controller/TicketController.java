@@ -24,7 +24,7 @@ public class TicketController {
     private final TicketService service;
 
     @PostMapping
-    public ResponseEntity<TicketResponse> create(@RequestBody CreateTicketRequest request) {
+    public ResponseEntity<TicketResponse> create(@Valid @RequestBody CreateTicketRequest request) {
         Ticket ticket = service.createTicket(request);
         TicketResponse response = TicketResponse.from(ticket);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
